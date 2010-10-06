@@ -11,6 +11,8 @@ describe("populateDirectoryContents", function() {
   var tree;
 	var sample_data;
 
+	// build a sample file structure.
+	// contents of Ramadan/ directory
 	sample_data = 	[ "/purification/"
 									, "/Ramadan/"
 									];
@@ -30,6 +32,7 @@ describe("populateDirectoryContents", function() {
   beforeEach(function() {
 		// add a hidden parent for the TreeView display.
 		var hiddenParent = document.createElement('div');
+		hiddenParent.id = "hiddenParent"
 		document.getElementsByTagName("body")[0].appendChild(hiddenParent);
 		hiddenParent.style.display = "none";
 
@@ -55,7 +58,6 @@ describe("populateDirectoryContents", function() {
 	});
 
   it("should put the attribute type:text on each node", function() {
-		console.info(root.children[0]);
     expect(root.children[0].data.type).toEqual("text");
   });
 
@@ -73,5 +75,10 @@ describe("populateDirectoryContents", function() {
 		expect(root.children[1].children[0].children[1].label).toEqual("nineteenth_lesson_in_fasting_S.pdf");
 		expect(root.children[1].children[0].children[2].label).toEqual("Twentieth_lesson_in_fasting_Sh.pdf");
 		expect(root.children[1].children[0].children[3].label).toEqual("Twenty_first_lesson_in_fasting.pdf");
+	});
+
+	afterEach(function() {
+		var hiddenParent = document.getElementById('hiddenParent');
+		document.getElementsByTagName("body")[0].removeChild(hiddenParent);
 	});
 })
