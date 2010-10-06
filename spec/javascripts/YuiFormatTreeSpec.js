@@ -39,7 +39,7 @@ describe("populateDirectoryContents", function() {
 		hiddenParent.appendChild(div);
 
 		// The TreeView JS object.
-		tree = new YAHOO.widget.TreeView("treeDiv1", YuiFormatTree(sample_data));
+		tree = new YAHOO.widget.TreeView("treeDiv1", {});
 		tree.render();
 
 		// The clickable "/" node:
