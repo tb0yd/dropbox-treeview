@@ -35,3 +35,39 @@ describe("YuiFormatTree", function() {
 		expect(tree.children[1].children[0].label).toEqual("30 lessons by Sheikh Fawzan/")
 	});
 });
+
+// this is closer to how it's going to work with Dropbox
+describe("populateDirectoryContents", function() {
+  var tree;
+	var sample_data;
+
+	sample_data = 	[ 
+										[
+											"/purification/LOADING"
+										]
+									, [
+											"/Ramadan/LOADING"
+										]
+									];
+
+	sample_data2 = [ ["/purification/LOADING"]
+									,	[
+											[ "/Ramadan/30 lessons by Sheikh Fawzan/Eighteenth_lesson_in_fasting_S.pdf"
+											,	"/Ramadan/30 lessons by Sheikh Fawzan/nineteenth_lesson_in_fasting_S.pdf"
+											,	"/Ramadan/30 lessons by Sheikh Fawzan/Twentieth_lesson_in_fasting_Sh.pdf"
+											,	"/Ramadan/30 lessons by Sheikh Fawzan/Twenty_first_lesson_in_fasting.pdf"
+											]
+										, "/Ramadan/How_to_feed_the_poor_during_th.pdf"
+								] ];
+
+  beforeEach(function() {
+    tree = new YuiFormatTree(sample_data);
+  });
+
+	it("should setup the basic menu", function() {
+		expect(tree.children[0].label).toEqual("purification/");
+		expect(tree.children[1].label).toEqual("Ramadan/");
+		expect(tree.children[0].children[0].label).toEqual("LOADING");
+		expect(tree.children[1].children[0].label).toEqual("LOADING");
+	});
+})
