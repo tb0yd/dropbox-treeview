@@ -39,10 +39,8 @@ function populateDirectoryContents(root, data) {
 	var tmp;
 	root.tree.removeNode(root.children[0]);	// remove the "LOADING" node
 	for(var i=0; i < data.length; i++) {
-		if (typeof data[i] == "string") {
-			tmp = new YAHOO.widget.TextNode(YuiFormatTreeNode(getBasename(data[i]), []), root, false);
-		} else {
-			tmp = new YAHOO.widget.TextNode(YuiFormatTreeNode(getBasename(getDirname(data[i][0])), []), root, false);
+		tmp = new YAHOO.widget.TextNode(YuiFormatTreeNode(getBasename(data[i]), []), root, false);
+		if (data[i].match(/\/$/)) {
 			tmp = new YAHOO.widget.TextNode(YuiFormatTreeNode("LOADING", []), tmp, false);
 		}
 	}
