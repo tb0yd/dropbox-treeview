@@ -1,0 +1,3 @@
+This gem is supposed to provide an interface to a Dropbox user's Public/ folder by way of the YUI2 TreeView widget.
+
+So as not to abuse the Dropbox API, the entire directory structure is not loaded at once, but incrementally as the user browses the tree.
