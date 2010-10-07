@@ -13,3 +13,11 @@ function cssLib(path) {
 	link.href = "/__spec__/include/" + path;
 	document.getElementsByTagName("head")[0].appendChild(link);
 }
+
+cssLib("treeview.css");
+cssLib("calendar.css");
+jsLib("yahoo-dom-event.js");
+jsLib("animation-min.js");
+jsLib("calendar-min.js");
+jsLib("json-min.js");
+jsLib("treeview-min.js");

@@ -1,11 +1,3 @@
-cssLib("treeview.css");
-cssLib("calendar.css");
-jsLib("yahoo-dom-event.js");
-jsLib("animation-min.js");
-jsLib("calendar-min.js");
-jsLib("json-min.js");
-jsLib("treeview-min.js");
-
 // this is closer to how it's going to work with Dropbox
 describe("populateDirectoryContents", function() {
   var tree;
