@@ -1,45 +1,14 @@
 // this is closer to how it's going to work with Dropbox
-describe("populateDirectoryContents", function() {
-  var tree;
-	var sample_data;
-
-	// build a sample file structure.
-	// contents of Ramadan/ directory
-	sample_data = 	[ "/purification/"
-									, "/Ramadan/"
-									];
-
-	// contents of Ramadan/ directory
-	sample_data2 = [ "/Ramadan/30 lessons by Sheikh Fawzan/"
-								 , "/Ramadan/How_to_feed_the_poor_during_th.pdf"
-								 ];
-
-	// contents of Ramadan/30 lessons by Sheikh Fawzan/ directory
-	sample_data3 =  [ "/Ramadan/30 lessons by Sheikh Fawzan/Eighteenth_lesson_in_fasting_S.pdf"
-									,	"/Ramadan/30 lessons by Sheikh Fawzan/nineteenth_lesson_in_fasting_S.pdf"
-									,	"/Ramadan/30 lessons by Sheikh Fawzan/Twentieth_lesson_in_fasting_Sh.pdf"
-									,	"/Ramadan/30 lessons by Sheikh Fawzan/Twenty_first_lesson_in_fasting.pdf"
-								  ];
+describe("adding nodes dynamically", function() {
+  var tree, hiddenParent;
 
   beforeEach(function() {
-		// add a hidden parent for the TreeView display.
-		var hiddenParent = document.createElement('div');
-		hiddenParent.id = "hiddenParent";
-		document.getElementsByTagName("body")[0].appendChild(hiddenParent);
-		hiddenParent.style.display = "none";
-
-		// the TreeView DOM node.
-		var div = document.createElement('div');
-		div.id = "treeDiv1";
-		hiddenParent.appendChild(div);
-
-		// The TreeView JS object.
-		tree = new YAHOO.widget.TreeView("treeDiv1", {});
-		tree.render();
-
+		hiddenParent = newHiddenDiv();
+		tree = renderNewTree(hiddenParent);
+		
 		// The clickable "/" node:
 		root = tree.getRoot();
-		TREEDATA.populateNode(root, sample_data);
+		TREEDATA.populateNode(root, sampleData[0]);
 	});
 
 	it("should setup the basic menu", function() {
@@ -54,15 +23,15 @@ describe("populateDirectoryContents", function() {
   });
 
 	it("should add the new nodes dynamically on level 2", function() {
-		TREEDATA.populateNode(root.children[1], sample_data2);
+		TREEDATA.populateNode(root.children[1], sampleData[1]);
 		expect(root.children[1].children[1].label).toEqual("How_to_feed_the_poor_during_th.pdf");
 		expect(root.children[1].children[0].label).toEqual("30 lessons by Sheikh Fawzan/");
 		expect(root.children[1].children[0].children[0].label).toEqual("LOADING");
 	});
 
 	it("should add the new nodes dynamically on level 3", function() {
-		TREEDATA.populateNode(root.children[1], sample_data2);
-		TREEDATA.populateNode(root.children[1].children[0], sample_data3);
+		TREEDATA.populateNode(root.children[1], sampleData[1]);
+		TREEDATA.populateNode(root.children[1].children[0], sampleData[2]);
 		expect(root.children[1].children[0].children[0].label).toEqual("Eighteenth_lesson_in_fasting_S.pdf");
 		expect(root.children[1].children[0].children[1].label).toEqual("nineteenth_lesson_in_fasting_S.pdf");
 		expect(root.children[1].children[0].children[2].label).toEqual("Twentieth_lesson_in_fasting_Sh.pdf");
@@ -70,7 +39,26 @@ describe("populateDirectoryContents", function() {
 	});
 
 	afterEach(function() {
-		var hiddenParent = document.getElementById('hiddenParent');
 		document.getElementsByTagName("body")[0].removeChild(hiddenParent);
 	});
 })
+
+describe("linking a TreeView widget to the data functions", function(){
+	var tree, hiddenParent;
+
+  beforeEach(function() {
+		hiddenParent = newParentDiv();
+		tree = renderNewTree(hiddenParent, {});
+
+    tree.subscribe("labelClick", function(node) {
+			var root = tree.getRoot();
+			TREEDATA.populateNode(root, sampleData[0]);
+			TREEDATA.populateNode(root.children[1], sampleData[1]);
+			tree.render();
+		});
+	});
+	
+	it("should work", function(){
+		
+	});
+});
